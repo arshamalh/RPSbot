@@ -1,3 +1,4 @@
+from dotenv import load_dotenv, dotenv_values as denv
 from telegram.ext import (Updater, Filters, 
                           CommandHandler, 
                           MessageHandler, 
@@ -7,7 +8,7 @@ from Keyboards import CancelKeyboard, PlayingKeyboard, MainKeyboard
 from Titles import titles as t
 from handlers import TextChoiceHandler, ButtonHandler
 
-
+load_dotenv()
 
 opponents = []
 
@@ -45,7 +46,7 @@ def MainHandler(update, ctx):
 
 
 # Bot settings
-BotToken = "1987640815:AAEdOu-w47RcYRCFoTQognLmg6QKZDvkgPA"
+BotToken = denv('BotToken')
 Bot = Updater(token=BotToken, use_context=True)
 
 # Add handlers
