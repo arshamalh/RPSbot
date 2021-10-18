@@ -16,7 +16,7 @@ dispatcher = Bot.dispatcher
 states = ['r', 'p', 's']
 Shaper = {"r": "💎︁",
           "p": "📜︁",
-          "s": "✀︁"}
+          "s": "✂️"}
 
 win_rates = {}
 
