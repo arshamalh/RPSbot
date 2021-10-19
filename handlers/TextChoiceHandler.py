@@ -1,6 +1,6 @@
 from time import sleep
 from core import checker
-from Keyboards import PlayingKeyboard
+from utiles.Keyboards import PlayingKeyboard
 
 def TextChoiceHandler(update, ctx):
     uid = update.effective_chat.id

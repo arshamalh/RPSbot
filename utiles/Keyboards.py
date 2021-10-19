@@ -1,9 +1,11 @@
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup
-from Titles import titles as t
+from utiles.Titles import titles as t
+
 MainKeyboard = ReplyKeyboardMarkup(
     keyboard=[
         [t['play_with_pc'], t['play_with_human']],
-        [t['restart'], t['leaderboard']]
+        [t['restart'], t['leaderboard']],
+        [t['total_win_rate']],
     ])
 
 PlayingKeyboard = InlineKeyboardMarkup(
