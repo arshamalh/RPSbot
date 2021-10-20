@@ -1,16 +1,20 @@
+from time import sleep
+from random import choice
+from dotenv import load_dotenv, dotenv_values as denv
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import (Updater, Filters, 
                           CommandHandler, 
                           MessageHandler, 
                           CallbackQueryHandler)
 
-from Keyboards import PlayingKeyboard
-from random import choice
-from time import sleep
+PlayingKeyboard = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [InlineKeyboardButton("Rock 💎", callback_data='r'),
+         InlineKeyboardButton("Paper 📜", callback_data='p'),
+         InlineKeyboardButton("Scissor ✂️", callback_data='s')],
+    ])
 
-# Bot settings
-BotToken = "1987640815:AAEdOu-w47RcYRCFoTQognLmg6QKZDvkgPA"
-Bot = Updater(token=BotToken, use_context=True)
-dispatcher = Bot.dispatcher
+load_dotenv()
 
 # Core settings
 states = ['r', 'p', 's']
@@ -59,9 +63,11 @@ def inputHandler(update, ctx):
     last_msg = ctx.user_data['last_message_id']
     text = checker(chatID, msg.text)
     if last_msg:
-        ctx.bot.edit_message_text(chat_id=chatID, 
-                                  message_id=last_msg, 
-                                  text=text, reply_markup=PlayingKeyboard)
+        ctx.bot.edit_message_text(
+            chat_id=chatID, 
+            message_id=last_msg, 
+            text=text, reply_markup=PlayingKeyboard
+        )
     else:
         ctx.bot.send_message(chat_id=chatID, text=text, reply_markup=PlayingKeyboard)
         last_msg = msg.message_id
@@ -77,7 +83,12 @@ def ButtonHandler(update, ctx):
     query.edit_message_text(text=text, reply_markup=PlayingKeyboard)
 
 
+# Bot settings
+BotToken = denv()['BotToken']
+Bot = Updater(token=BotToken, use_context=True)
+
 # Add handlers
+dispatcher = Bot.dispatcher
 dispatcher.add_handler(CommandHandler('start', start))
 dispatcher.add_handler(CallbackQueryHandler(ButtonHandler))
 dispatcher.add_handler(MessageHandler(Filters.text, inputHandler))
